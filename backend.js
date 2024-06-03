@@ -88,6 +88,10 @@ app.post('/backend_posts', async (req, res)=>{
     res.status(200).send("Added")
 })
 
+app.get('*', (req, res)=>{
+    res.status(200).sendFile(path.resolve(__dirname, reactBuildPath, 'index.js'))
+})
+
 app.listen(port, hostname, ()=>{
     console.log(`Server Listning ${port}`)
 })

@@ -5,6 +5,7 @@
   "main": "backend.js",
   "type": "module",
   "scripts": {
+    "start": "nodemon backend.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Farshid Hossain",
@@ -19,6 +20,7 @@
     "express": "^4.19.2",
     "express-session": "^1.18.0",
     "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.4.1",
     "nodemon": "^3.1.2",
     "request": "^2.88.2"
   },
