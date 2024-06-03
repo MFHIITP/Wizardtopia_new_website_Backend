@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
-export const server = "hossainfarshid:JUITfh-891@clusterfarshid.vcl5snh.mongodb.net";
-export const database = "Wizardtopia";
+const server = "hossainfarshid:JUITfh-891@clusterfarshid.vcl5snh.mongodb.net";
+const database = "Wizardtopia";
 
 const connect = async () => {
     try {

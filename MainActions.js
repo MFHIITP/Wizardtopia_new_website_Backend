@@ -6,7 +6,7 @@ const mainactions =  (req, res) => {
 
     const sendRegistrationEmail = async (email) => {
         const msg = {
-            to: email,
+            to: email, 
             from: 'hossainfarshid@gmail.com',
             subject: 'Registration Successful',
             text: `Welcome to Wizardtopia! Your registration was successful. The password you gave us is ${req.body.password}`,
@@ -26,20 +26,9 @@ const mainactions =  (req, res) => {
         if (mail.length == 0) {
             await data.save();
             const mail1 = await Collection1.find({ email: req.body.email });
-            const token = jwt.sign(
-                {
-                    id: mail1[0]._id,
-                    email: mail1[0].email
-                },
-                JWT_SECRET,
-                {
-                    expiresIn: '24h'
-                }
-            );
             sendRegistrationEmail(req.body.email);
             res.status(200).json({
-                message: "OK",
-                token: token
+                message: "OK"
             });
         }
         else {

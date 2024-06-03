@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { app, Collection1, JWT_SECRET } from './backend.js';
 
-const loginactions = (req, res) => {
+const loginactions = async(req, res) => {
     const output = (async () => {
 
         const mail = await Collection1.find({ email: req.body.email });
@@ -23,9 +23,24 @@ const loginactions = (req, res) => {
                         expiresIn: '24h',
                     }
                 );
-                res.status(200).json({
-                    message: "OK",
-                    token: token
+                const profiles = {
+                    name: mail[0].name,
+                    email: mail[0].email,
+                    college: mail[0].study,
+                    password: mail[0].password,
+                    year: mail[0].year,
+                    branch: mail[0].branch,
+                    phone: mail[0].phone
+                }
+                const options = {
+                    httpOnly: false,
+                    secure: false,
+                    sameSite: "lax",
+                    path: '/'
+                }
+                res.status(200).cookie("Cookie", token, [{...options, domain: "wkhx5f4s-5173.inc1.devtunnels.ms"}]).cookie("ProfileInfo", profiles, [{...options, domain: "wkhx5f4s-5173.inc1.devtunnels.ms"}])
+                .send({
+                    message: "OK"
                 });
             }
         }
