@@ -32,15 +32,10 @@ const loginactions = async(req, res) => {
                     branch: mail[0].branch,
                     phone: mail[0].phone
                 }
-                const options = {
-                    httpOnly: false,
-                    secure: false,
-                    sameSite: "lax",
-                    path: '/'
-                }
-                res.status(200).cookie("Cookie", token, [{...options, domain: "wkhx5f4s-5173.inc1.devtunnels.ms"}]).cookie("ProfileInfo", profiles, [{...options, domain: "wkhx5f4s-5173.inc1.devtunnels.ms"}])
-                .send({
-                    message: "OK"
+                res.status(200).json({
+                    message: "OK",
+                    token: token,
+                    profileinfo: profiles
                 });
             }
         }

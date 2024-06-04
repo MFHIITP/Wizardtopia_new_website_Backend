@@ -13,13 +13,10 @@ const updateactions = (req, res) => {
             branch: mail1[0].branch,
             phone: mail1[0].phone
         }
-        const options = {
-            httpOnly: false,
-            secure: true,
-            sameSite: "none"
-        }
-        res.status(200).cookie("ProfileInfo", profiles, options)
-        .send("Updated");
+        res.status(200).json({
+            message: "OK",
+            profileinfo: profiles
+        });
     });
     output();
 }

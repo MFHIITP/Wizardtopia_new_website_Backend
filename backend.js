@@ -25,7 +25,7 @@ const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY
 
 sgMail.setApiKey(SENDGRID_API_KEY)
 
-export const JWT_SECRET = process.env.JWT_SECRET
+export const JWT_SECRET = process.env.JWT_SECRET || "This website is made by Farshid Hossain"
 const port = process.env.PORT
 
 const hostname = "0.0.0.0"
@@ -35,6 +35,7 @@ app.use(express.json())
 
 app.set('view-engine', 'html')
 app.use(cors({origin: true, credentials: true}));
+
 app.use(cookieParser());
 
 const reactBuildPath = '../Wizardtopia-vite/dist'
@@ -88,9 +89,6 @@ app.post('/backend_posts', async (req, res)=>{
     res.status(200).send("Added")
 })
 
-app.get('*', (req, res)=>{
-    res.status(200).sendFile(path.resolve(__dirname, reactBuildPath, 'index.js'))
-})
 
 app.listen(port, hostname, ()=>{
     console.log(`Server Listning ${port}`)
