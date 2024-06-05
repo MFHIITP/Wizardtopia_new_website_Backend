@@ -121,7 +121,7 @@ app.post('/backend_points_increase', async(req, res)=>{
 
 app.post('/backend_points_decrease', async(req, res)=>{
     const oldpoint = await pointcollection.find({house: req.body.house})
-    let newpoint = req.body.point - oldpoint[0].points
+    let newpoint = Math.abs(req.body.point - oldpoint[0].points)
     await pointcollection.updateOne({house: req.body.house}, {$set:{points: newpoint}})
     res.status(200).json({
         newpoint: newpoint,
