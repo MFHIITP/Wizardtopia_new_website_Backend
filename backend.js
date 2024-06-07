@@ -46,7 +46,7 @@ app.use(express.static(reactBuildPath));
 
 connect();
 
-var Schema = mongoose.Schema({
+var Schema = new mongoose.Schema({
     name:String,
     year:String,
     branch:String,
@@ -69,7 +69,7 @@ app.post('/check_token', checktoken)
 
 app.post('/admins', adminactions)
 
-let newschema = mongoose.Schema({
+let newschema = new mongoose.Schema({
     name: String,
     title: String,
     content: String
@@ -90,7 +90,7 @@ app.post('/backend_posts', async (req, res)=>{
 })
 
 
-let points_schema = mongoose.Schema({
+let points_schema = new mongoose.Schema({
     house: String,
     points: Number
 })
@@ -112,7 +112,7 @@ app.get('/backend_points', async(req, res)=>{
 
 app.post('/backend_points_increase', async(req, res)=>{
     const oldpoint = await pointcollection.find({house: req.body.house})
-    let newpoint = req.body.point + oldpoint[0].points
+    let newpoint = req.body.point + oldpoint[0].points;
     await pointcollection.updateOne({house: req.body.house}, {$set:{points: newpoint}})
     res.status(200).json({
         newpoint: newpoint,
