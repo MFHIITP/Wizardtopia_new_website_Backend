@@ -15,6 +15,8 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import cookieParser from 'cookie-parser';
 import adminactions from './AdminActions.js';
+import Logging_In from './Logging_In.js';
+import IsLoggingOut from './IsLoggingOut.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename)
@@ -128,6 +130,29 @@ app.post('/backend_points_decrease', async(req, res)=>{
     })
 })
 
+let status = new mongoose.Schema({
+    email: String,
+    name: String,
+    intime: String,
+    outtime: String,
+    stats: String
+})
+
+export const statuscollection = mongoose.model('status_info', status);
+
+app.post('/backend_logging', Logging_In);
+
+app.post('/backend_isloggingout', IsLoggingOut);
+
+app.get('/backend_logging', async(req, res)=>{
+    const persons = await statuscollection.find({});
+    res.status(200).json(persons);
+})
+
+app.post('/backend_signedout', async(req, res)=>{
+    const reuslt = await statuscollection.deleteOne({email: req.body.email});
+    res.status(200).send('Gone for good');
+})
 
 app.listen(port, hostname, ()=>{
     console.log(`Server Listning ${port}`)
