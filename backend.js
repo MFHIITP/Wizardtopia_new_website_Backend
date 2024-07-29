@@ -2,8 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import path from 'path';
 import cors from 'cors';
-import session from 'express-session';
-import sgMail from '@sendgrid/mail'
+import sgMail from '@sendgrid/mail';
 import connect from './connect.js'
 import mainactions from './MainActions.js';
 import loginactions from './LoginActions.js';
@@ -23,9 +22,7 @@ const __dirname = dirname(__filename)
 
 dotenv.config();
 
-const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY
-
-sgMail.setApiKey(SENDGRID_API_KEY)
+export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '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';
 
 export const JWT_SECRET = process.env.JWT_SECRET || "This website is made by Farshid Hossain"
 const port = process.env.PORT
@@ -38,7 +35,7 @@ app.use(express.json())
 app.set('view-engine', 'html')
 app.use(cors({origin: true, credentials: true}));
 
-app.use(cookieParser());
+app.use(cookieParser()); 
 
 const reactBuildPath = '../Wizardtopia-vite/dist'
 
