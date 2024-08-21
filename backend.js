@@ -1,30 +1,24 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import path from 'path';
 import cors from 'cors';
-import sgMail from '@sendgrid/mail';
 import connect from './connect.js'
-import mainactions from './MainActions.js';
+import {mainactions} from './MainActions.js';
 import loginactions from './LoginActions.js';
 import removeactions from './RemoveActions.js';
 import updateactions from './UpdateActions.js';
 import checktoken from './CheckToken.js';
 import dotenv from 'dotenv'
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
 import cookieParser from 'cookie-parser';
 import adminactions from './AdminActions.js';
 import Logging_In from './Logging_In.js';
 import IsLoggingOut from './IsLoggingOut.js';
+import otpverify from './VerifyOTP.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename)
+export let otpStore = {}
 
 dotenv.config();
 
-export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY || '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';
-
-export const JWT_SECRET = process.env.JWT_SECRET || "This website is made by Farshid Hossain"
+export const JWT_SECRET = process.env.JWT_SECRET
 const port = process.env.PORT
 
 const hostname = "0.0.0.0"
@@ -37,23 +31,38 @@ app.use(cors({origin: true, credentials: true}));
 
 app.use(cookieParser()); 
 
-const reactBuildPath = '../Wizardtopia-vite/dist'
-
-
-app.use("/static", express.static(path.join(path.resolve(), 'static')));
-app.use(express.static(reactBuildPath));
-
 connect();
 
 var Schema = new mongoose.Schema({
-    name:String,
-    year:String,
-    branch:String,
-    phone: Number,
-    email:String,
-    study:String,
-    password: String
-});
+    name:{
+        type: String,
+        require: true
+    },
+    year:{
+        type: String,
+        require: true
+    },
+    branch:{
+        type: String,
+        require: true
+    },
+    phone:{
+        type: Number,
+        require: true
+    },
+    email:{
+        type: String,
+        require: true
+    },
+    study:{
+        type: String,
+        require: true
+    },
+    password: {
+        type: String,
+        require: true
+    }
+}, {timestamps: true});
 export const Collection1 = mongoose.model("collection_1", Schema);
 
 app.post('/backend_main', mainactions)
@@ -67,6 +76,8 @@ app.post('/backend_update', updateactions)
 app.post('/check_token', checktoken)
 
 app.post('/admins', adminactions)
+
+app.post('/otpverify', otpverify)
 
 let newschema = new mongoose.Schema({
     name: String,
