@@ -1,4 +1,4 @@
-import { app, Collection1 } from './backend.js';
+import { Collection1 } from "./backend.js";
 
 const adminactions = async(req, res) => {
     const output = (async () => {

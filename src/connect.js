@@ -1,7 +1,9 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const server = "hossainfarshid:JUITfh-891@clusterfarshid.vcl5snh.mongodb.net";
-const database = "Wizardtopia";
+const server = process.env.DB_HOST;
+const database = process.env.DB_NAME;
 
 const connect = async () => {
     try {

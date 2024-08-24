@@ -13,6 +13,7 @@ import adminactions from './AdminActions.js';
 import Logging_In from './Logging_In.js';
 import IsLoggingOut from './IsLoggingOut.js';
 import otpverify from './VerifyOTP.js';
+import queryrouter from './routes/query.route.js'
 
 export let otpStore = {}
 
@@ -161,6 +162,8 @@ app.post('/backend_signedout', async(req, res)=>{
     const reuslt = await statuscollection.deleteOne({email: req.body.email});
     res.status(200).send('Gone for good');
 })
+
+app.use("/api", queryrouter);
 
 app.listen(port, hostname, ()=>{
     console.log(`Server Listning ${port}`)

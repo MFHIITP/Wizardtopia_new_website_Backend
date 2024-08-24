@@ -5,7 +5,7 @@
   "main": "backend.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon backend.js",
+    "start": "nodemon ./src/backend.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Farshid Hossain",
