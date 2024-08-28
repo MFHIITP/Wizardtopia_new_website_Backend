@@ -35,7 +35,7 @@ const loginactions = async(req, res) => {
                 res.status(200).json({
                     message: "OK",
                     token: token,
-                    profileinfo: profiles
+                    profileinfo: profiles,
                 });
             }
         }

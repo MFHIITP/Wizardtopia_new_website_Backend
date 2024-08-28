@@ -14,6 +14,7 @@ import Logging_In from './Logging_In.js';
 import IsLoggingOut from './IsLoggingOut.js';
 import otpverify from './VerifyOTP.js';
 import queryrouter from './routes/query.route.js'
+import { upload } from './middlewares/multer.middleware.js';
 
 export let otpStore = {}
 
@@ -25,12 +26,12 @@ const port = process.env.PORT
 const hostname = "0.0.0.0"
 
 export const app = express();
+app.use(cookieParser()); 
 app.use(express.json())
 
-app.set('view-engine', 'html')
+app.set('view engine', 'html')
 app.use(cors({origin: true, credentials: true}));
 
-app.use(cookieParser()); 
 
 connect();
 
@@ -83,7 +84,8 @@ app.post('/otpverify', otpverify)
 let newschema = new mongoose.Schema({
     name: String,
     title: String,
-    content: String
+    content: String,
+    image: String
 })
 
 let postcollection = mongoose.model("posts", newschema)
@@ -94,10 +96,15 @@ app.get('/backend_posts', async (req, res)=>{
     res.status(200).json(mail);
 })
 
-app.post('/backend_posts', async (req, res)=>{
-    const data = new postcollection(req.body)
+app.post('/backend_posts', upload.single('file'), async (req, res)=>{
+    const data = new postcollection({
+        name: req.body.name,
+        title: req.body.title,
+        content: req.body.content,
+        image: req.file.path
+    })
     await data.save();
-    res.status(200).send("Added")
+    res.status(200).send("Saved")
 })
 
 
