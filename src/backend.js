@@ -101,7 +101,7 @@ app.post('/backend_posts', upload.single('file'), async (req, res)=>{
         name: req.body.name,
         title: req.body.title,
         content: req.body.content,
-        image: req.file.path
+        image: req.file?.path
     })
     await data.save();
     res.status(200).send("Saved")
