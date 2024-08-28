@@ -20,7 +20,7 @@ export let otpStore = {}
 
 dotenv.config();
 
-export const JWT_SECRET = process.env.JWT_SECRET
+export const JWT_SECRET = process.env.JWT_SECRET || "This website is created by Farshid Hossain of IT 2026 batch"
 const port = process.env.PORT
 
 const hostname = "0.0.0.0"
